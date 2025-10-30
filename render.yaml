@@ -1,10 +1,12 @@
+@"
 services:
   - type: web
     name: rag-cota
     env: python
-    pythonVersion: "3.12.7"  # ← FORCES WORKING PYTHON
-    buildCommand: "pip install poetry && poetry install --no-interaction"
-    startCommand: "poetry run gunicorn app:app"
+    pythonVersion: "3.12.7"
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT"
     envVars:
       - key: GEMINI_API_KEY
         sync: false
+"@ | Out-File -FilePath render.yaml -Encoding utf8
